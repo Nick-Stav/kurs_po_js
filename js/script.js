@@ -1,15 +1,22 @@
 let money = +prompt ('Ваш бюджет на месяц?');
 let nameMagaz = prompt ('Название вашего магазина?');
-let a = prompt ('Какой тип товаров будем продавать?');
-let b = prompt ('Какой тип товаров будем продавать?');
-let c = prompt ('Какой тип товаров будем продавать?');
+
+
+
 
 let mainList = {
-	moneyMainList: money/30,
+	moneyMainList: money,
 	nameMagazin: nameMagaz,
-	shopGoods: [a,b,c],
-	employers: [],
-	open: true
-}
+	shopGoods: [],
+	employers: {},
+	open: false
+};
+for (let i = 0; i < 3; i++) {
+	let shopProd = prompt (" Какой тип товаров будем продавать?");
+	mainList.shopGoods [i] = shopProd;
+}//конец цикла
 
-console.log (' бюджет на 1 день: ' + mainList.moneyMainList );
+
+
+console.log (' бюджет на 1 день: ' + mainList.moneyMainList/30 );
+console.log (mainList.shopGoods);
