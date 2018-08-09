@@ -8,6 +8,8 @@ for (let i = 0; i < arr.length; i++) {
 	
 }
 
+console.log (res);
+
 var kvadr = Math.pow(res,3);
 var kvadrStr = new String(kvadr);
 
