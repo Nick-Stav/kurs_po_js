@@ -25,9 +25,9 @@ let goods = [goodOne, goodTwo, goodThree, goodFor];
 
 
 //последние кнопки через tagName
-let btnTag = document.getElementsByTagName('button')[0],
-	btnTagTwo = document.getElementsByTagName('button')[1],
-	btnTagThree = document.getElementsByTagName('button')[2];
+let btnTag = document.getElementsByTagName('button')[1],
+	btnTagTwo = document.getElementsByTagName('button')[2],
+	btnTagThree = document.getElementsByTagName('button')[3];
 
 //массив с последними кнопками
 let btnTags = [btnTag, btnTagTwo, btnTagThree];
