@@ -34,11 +34,12 @@ let nazvShop = document.getElementsByClassName('name-value')[0],
 let massValue = [nazvShop, moneyShop, tovShop, nameShop, emplShop, diskShop, openShop, moneyDayShop, timeShop];
 
 //блоки с классом good-item
-let goods = document.getElementsByClassName('goods-item'),
-	goodOne = document.getElementsByClassName('goods-item')[0],
+let goods = document.getElementsByClassName('goods-item');
+let	goodOne = document.getElementsByClassName('goods-item')[0],
 	goodTwo = document.getElementsByClassName('goods-item')[1],
 	goodThree = document.getElementsByClassName('goods-item')[2],
 	goodFor = document.getElementsByClassName('goods-item')[3];
+
 
 //массив с товарами
 let goodds = [goodOne, goodTwo, goodThree, goodFor];
@@ -53,8 +54,7 @@ let btnTag = document.getElementsByTagName('button')[1],
 	btnTag.disabled = true;
 	budgetBtn.disabled = true;
 
-//массив с последними кнопками
-let btnTags = [btnTag, budgetBtn, employerBtn];
+
 
 
 //обращаемся через селектор querySelector
@@ -100,12 +100,14 @@ btnTag.addEventListener('click', () => {
 		if ((typeof(shopProd)) === 'string' && (typeof(shopProd)) != null && shopProd.length < 50 ) {
 			
 			mainList.shopGoods[i] = shopProd;
-			tovShop.textСontent = mainList.shopGoods;
+			tovShop.textContent = mainList.shopGoods;
 			console.log('Все верно!');
 		} else {
 			i = i-1;
 		}
+		
 	}//конец цикла
+
 });
 
 //вводим продукты через запятую
@@ -167,5 +169,3 @@ employerBtn.addEventListener('click', () => {
 		
 	//КОНЕЦ функция найма сотрудников
 });
-
-//дисконтная система
