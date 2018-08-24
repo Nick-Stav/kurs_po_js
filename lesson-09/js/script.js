@@ -115,23 +115,28 @@ let more = document.querySelector('.more'),
 		document.body.style.overflow = '';
 	});
 
+	
 	//приписываем модальное окно для кнопки "узнать подробнее"
-	for (let mod = 0; mod < descriptionBtn.length; mod++) {
-		descriptionBtn[mod].addEventListener('click', function() {
-		this.classList.add('more-splash');
-		//показываем модалку
-		overlay.style.display = 'block';
-		//дeлаем, чтоб документ не прокручивался во время модалки
-		document.body.style.overflow = 'hidden';
-	});	
-	//закрывашка для модалки
-	close.addEventListener('click', function() {
-		overlay.style.display = 'none';
-		descriptionBtn[mod].classList.remove('more-splash');
-		//делаем чтоб документ снова прокручивался
-		document.body.style.overflow = '';
-	});
-	};
+	let descr = document.querySelector('.info');	
+
+	descr.addEventListener('click', function(event) {
+		let target = event.target;
+
+		if (target.className == 'description-btn') {
+			for (let mod = 0; mod < descriptionBtn.length; mod++){
+				if (target == descriptionBtn[mod]) {
+					showTabContent(mod);
+					this.classList.add('more-splash');
+					//показываем модалку
+					overlay.style.display = 'block';
+					//дeлаем, чтоб документ не прокручивался во время модалки
+					document.body.style.overflow = 'hidden';
+					break;
+				}
+			}
+		}
+
+	});//заканчиваем делегирование
 
 
 });
