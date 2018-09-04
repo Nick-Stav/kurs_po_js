@@ -52,26 +52,18 @@ function slider() {
 	}
 
 	//вешаем события к кнопкам
-	prev.addEventListener('click', function(){
-
-		plusSlides(-1);
-	});
-	next.addEventListener('click', function(){
-
-		plusSlides(1);
-	});
+	prev.addEventListener('click', () => plusSlides(-1));
+	next.addEventListener('click', () => plusSlides(1));
 
 
 	//привязываем клики к точкам
-	dotsWrap.addEventListener('click', function(event){
+	dotsWrap.addEventListener('click', (event) =>
 		//цикл проверка на параметр
 		for (let i = 0; i < dots.length + 1; i++) {
 			if (event.target.classList.contains('dot') && event.target == dots[i-1]) {
 				currentSlide(i);
 			}
-		}
-	});
+		});
 
-}
 
 module.exports = slider;
