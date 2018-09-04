@@ -14,7 +14,7 @@ function calc() {
 
 let lookSymb = /\d/ig;//записываем в lookSymb через регулярное выражение все числа
 		//отслеживаем изменения данных
-		persons.addEventListener('input', function(event) {  //прявязываем события
+		persons.addEventListener('input', (event) =>   //прявязываем события
 			personsSum = +this.value; //записываем в переменную personsSum числовое значение пользователя 
 			total = (daysSum + personsSum)*4000; // записываем формулу рассчета
 
@@ -45,10 +45,10 @@ let lookSymb = /\d/ig;//записываем в lookSymb через регуля
 			    total = 0;
 			} 
 			
-		});
+		);
 
 		//аналогичным образом делаем и следующий инпут
-		restDays.addEventListener('input', function(event) {
+		restDays.addEventListener('input', (event) =>
 			daysSum = +this.value;
 			total = (daysSum + personsSum)*4000;
 			
@@ -65,18 +65,18 @@ let lookSymb = /\d/ig;//записываем в lookSymb через регуля
 				totalValue.innerHTML = total;
 			}
 			
-		});//конец второй инпут
+		);//конец второй инпут
 
 
 		//подкручиваем select
-		place.addEventListener('change', function(){ //прикручиваем реакцию на изменение селекта
+		place.addEventListener('change', () => //прикручиваем реакцию на изменение селекта
 			if ( restDays.value ==""  || persons.value =="" ) { //если в инпутах пользователь оставил пустые строки, то 
 				totalValue.innerHTML = 0; //то выводим в строке результата 0
 			} else { //в противном случае умножаем результат на коэфициент выбраной строки селекта
 				let a = total; 
 				totalValue.innerHTML = a * this.options[this.selectedIndex].value;
 			}
-		});
+		);
 
 
 }
