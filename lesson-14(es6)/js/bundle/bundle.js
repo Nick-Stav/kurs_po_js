@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', function() {//проверка на 
 	let timer = require('../parts/timer.js'); //2) таймер 
 	let formMassage = require('../parts/formMassage.js'); //3) форма обратной связи
 	let slider = require('../parts/slider.js'); //4) слайдер 
-	let calc = require('../parts/calc.js'); //4) слайдер 
+	let calc = require('../parts/calc.js'); //5) калькулятор
 
 	tab();
 	timer();
@@ -276,14 +276,8 @@ function slider() {
 	}
 
 	//вешаем события к кнопкам
-	prev.addEventListener('click', function(){
-
-		plusSlides(-1);
-	});
-	next.addEventListener('click', function(){
-
-		plusSlides(1);
-	});
+	prev.addEventListener('click', () => plusSlides(-1));
+	next.addEventListener('click', () => plusSlides(1));
 
 
 	//привязываем клики к точкам
