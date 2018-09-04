@@ -17,7 +17,7 @@ function formMassage () {
 		statusMessage.classList.add('status');
 
 		//работаем с модалкой
-		form.addEventListener('submit', function(event){
+		form.addEventListener('submit', (event) =>
 			event.preventDefault();
 			form.appendChild(statusMessage);
 
@@ -56,7 +56,7 @@ function formMassage () {
 				//очищаемам поля ввода
 			}
 
-		});
+		);
 
 
 
@@ -66,7 +66,7 @@ function formMassage () {
 
 
 			//работаем с формой
-			formLid.addEventListener('submit', function(event){
+			formLid.addEventListener('submit', (event) =>
 				event.preventDefault();
 				formLid.appendChild(statusMessage);
 
@@ -108,7 +108,7 @@ function formMassage () {
 					//очищаемам поля ввода
 				}
 
-			});
+			);
 
 }
 
