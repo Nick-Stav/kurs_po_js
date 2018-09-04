@@ -27,7 +27,7 @@ function tab() {
 
 
 	//делегируем, пишем обработчик событий
-	info.addEventListener('click', function(event){
+	info.addEventListener('click', (event) =>
 		let target = event.target;
 		if (target.className == 'info-header-tab') {
 			//ghb помощи цикла перебираем все имеющиеся табы
@@ -38,7 +38,7 @@ function tab() {
 				} //конец условия
 			} //конец цикла перебора
 		}//конец условия
-	});//конец делигирования
+	);//конец делигирования
 
 
 //работаем с модальным окном
@@ -48,25 +48,25 @@ let more = document.querySelector('.more'),
 	descriptionBtn = document.getElementsByClassName('description-btn');
 
 	//пишем событие для кнопки "узнать больше"
-	more.addEventListener('click', function() {
+	more.addEventListener('click', () =>
 		this.classList.add('more-splash');
 		//показываем модалку
 		overlay.style.display = 'block';
 		//дeлаем, чтоб документ не прокручивался во время модалки
 		document.body.style.overflow = 'hidden';
-	});	
+	);	
 	//закрывашка для модалки
-	close.addEventListener('click', function() {
+	close.addEventListener('click', () =>
 		overlay.style.display = 'none';
 		more.classList.remove('more-splash');
 		//делаем чтоб документ снова прокручивался
 		document.body.style.overflow = '';
-	});
+	);
 
 	//приписываем модальное окно для кнопки "узнать подробнее"
 	let descr = document.querySelector('.info');	
 
-	descr.addEventListener('click', function(event) {
+	descr.addEventListener('click', (event) =>
 		let target = event.target;
 
 		if (target.className == 'description-btn') {
@@ -83,7 +83,7 @@ let more = document.querySelector('.more'),
 			}
 		}
 
-	});//заканчиваем делегирование
+	);//заканчиваем делегирование
 
 
 }
