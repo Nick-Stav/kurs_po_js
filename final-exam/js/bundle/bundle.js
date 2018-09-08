@@ -4,20 +4,20 @@
 window.addEventListener('DOMContentLoaded', function() {//проверка на то, что страница загрузилась т.е. скрипты начнут рабоать после загрузки страницы
 
 	let propEngineer = require('../parts/propEngineer.js'); //1) модальное окно prop_engineer
-	let form = require('../parts/form.js'); //1) форма обратной связи
+	// let formMassage = require('../parts/formMassage.js'); //1) форма обратной связи
 
 	propEngineer();
-	form();
+	// formMassage();
 
 
 });
-},{"../parts/form.js":2,"../parts/propEngineer.js":3}],2:[function(require,module,exports){
-
-},{}],3:[function(require,module,exports){
+},{"../parts/propEngineer.js":2}],2:[function(require,module,exports){
 let headerBtn = document.getElementsByClassName('header_btn')[0],
 	popupEngineer = document.getElementsByClassName('popup_engineer')[0],
 	closeModalHead = document.getElementsByClassName('popup_close')[1],
-	closeModalBack = document.getElementsByClassName('popup_dialog')[1];
+	closeModalBack = document.getElementsByClassName('popup_dialog')[1],
+	callBackHead = document.getElementsByClassName('phone_link')[0],
+	callBackBottom = document.getElementsByClassName('phone_link')[1];;
 	
 
 
@@ -31,5 +31,9 @@ closeModalHead.addEventListener('click', (event) => popupEngineer.style.display 
 closeModalBack.addEventListener('click', (event) => popupEngineer.style.display = 'none');
 		
 	
+//нажимаем на надписи
+
+callBackHead.addEventListener('click', (event) => popupEngineer.style.display = 'flex');
+callBackBottom.addEventListener('click', (event) => popupEngineer.style.display = 'flex');
 
 },{}]},{},[1]);
