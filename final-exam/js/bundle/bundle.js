@@ -5,15 +5,19 @@ window.addEventListener('DOMContentLoaded', function() {//проверка на 
 
 	let propEngineer = require('../parts/propEngineer.js'); //1) модальное окно prop_engineer
 	// let formMassage = require('../parts/formMassage.js'); //2) форма обратной связи
-	let modalPopup = require('../parts/modalPopup.js'); //2) модальное окно prop_engineer
+	let modalPopup = require('../parts/modalPopup.js'); //3) модальное окно prop_engineer
+	let timer = require('../parts/timer.js');//4) таймер
+
+
 
 	propEngineer();
 	// formMassage();
 	modalPopup();
+	timer();
 
 
 });
-},{"../parts/modalPopup.js":2,"../parts/propEngineer.js":3}],2:[function(require,module,exports){
+},{"../parts/modalPopup.js":2,"../parts/propEngineer.js":3,"../parts/timer.js":4}],2:[function(require,module,exports){
 let popup = document.getElementsByClassName('popup')[0],//модалка
 	callBackHead = document.getElementsByClassName('phone_link')[0],//надпись в шапке
 	callBackBottom = document.getElementsByClassName('phone_link')[1],//надпись в подвале
@@ -59,6 +63,60 @@ closeModalHead.addEventListener('click', (event) => popupEngineer.style.display 
 closeModalBack.addEventListener('click', (event) => popupEngineer.style.display = 'none');
 		
 	
+
+
+},{}],4:[function(require,module,exports){
+let deadline = '2019/07/04';
+
+function getTimeRemaining(endtime) {
+	let t = Date.parse(endtime) - Date.parse(new Date()),
+	seconds = Math.floor( (t/1000)%60 ), 
+	minutes = Math.floor((t/1000/60)%60),
+	hours = Math.floor( (t/(1000*60*60)) %24),
+	days = Math.floor( (t/(1000*60*60*24)) );
+
+
+	return {
+		'total': t,
+		'days' : days, 
+		'hours': hours,
+		'minutes': minutes,
+		'seconds': seconds
+	};
+}
+
+//функция, которая запускает часы
+function setClock(id, endtime){
+
+	let timer = document.getElementsByClassName('timer')[0],
+		days = timer.querySelector('.days'),
+		hours = timer.querySelector('.hours'),
+		minutes = timer.querySelector('.minutes'),
+		seconds = timer.querySelector('.seconds');
+
+		function updateClock() {
+			let t = getTimeRemaining(endtime);
+			days.innerHTML = (t.days < 10) ? '0' + t.days : t.days;
+			hours.innerHTML = (t.hours < 10) ? '0' + t.hours : t.hours;
+			minutes.innerHTML = (t.minutes < 10) ? '0' + t.minutes : t.minutes;
+			seconds.innerHTML = (t.seconds < 10) ? '0' + t.seconds : t.seconds;
+
+			//остановка таймера
+			if (t.total <= 0) {
+				let timeInterval;
+				clearInterval(timeInterval);
+				timer.innerHTML = '00:00:00';
+			}
+		}
+
+		updateClock();
+		let timeInterval = setInterval(updateClock, 1000);
+
+		
+}//конец функции setClock
+
+//вызываем функцию запуска часов
+setClock('timer', deadline);
 
 
 },{}]},{},[1]);
