@@ -7,6 +7,8 @@ window.addEventListener('DOMContentLoaded', function() {//проверка на 
 	// let formMassage = require('../parts/formMassage.js'); //2) форма обратной связи
 	let modalPopup = require('../parts/modalPopup.js'); //3) модальное окно prop_engineer
 	let timer = require('../parts/timer.js');//4) таймер
+	let tabs = require('../parts/tabs.js');//5) табы 
+	let img = require('../parts/img.js'); //6) картинки
 
 
 
@@ -14,10 +16,55 @@ window.addEventListener('DOMContentLoaded', function() {//проверка на 
 	// formMassage();
 	modalPopup();
 	timer();
+	tabs();
+	img();
 
 
 });
-},{"../parts/modalPopup.js":2,"../parts/propEngineer.js":3,"../parts/timer.js":4}],2:[function(require,module,exports){
+},{"../parts/img.js":2,"../parts/modalPopup.js":3,"../parts/propEngineer.js":4,"../parts/tabs.js":5,"../parts/timer.js":6}],2:[function(require,module,exports){
+let photo = document.getElementsByClassName('photo')[0],//взяли большой раздел со всеми фотками
+	photoDiv = document.createElement('div'),// создали новый див
+	aImag = document.getElementsByClassName('imgClass'),//картинки в ссылках
+	image = document.getElementsByClassName('image'); //объявляем картинку
+	
+	photoDiv.classList.add("div_bg"); //добавили класс диву
+	photo.appendChild(photoDiv);
+
+let bgDiv = document.getElementsByClassName("div_bg")[0]; //объявили этот див	
+
+	for (let i = 0; i < aImag.length; i++) {
+		aImag[i].onclick = function(event) {
+			return false;
+		};
+	}
+
+	//делегирование 
+	photo.addEventListener('click', function (event){
+
+		let target = event.target;
+		if (target.matches('.image')) {
+			for (let i = 0; i < image.length; i++) {
+				if (target == image[i]) {
+					event.target.cloneNode(true);
+					event.target.classList.add("overlay");
+					bgDiv.style.display = 'flex';
+					break;
+				}
+			}
+		}
+	});
+
+	//закрываем модалку при клике на bg
+bgDiv.addEventListener('click', function (event) { 
+	bgDiv.style.display = 'none';
+	
+	for (let i = 0; i < image.length; i++) {
+		image[i].classList.remove("overlay");
+	}
+	
+});
+
+},{}],3:[function(require,module,exports){
 let popup = document.getElementsByClassName('popup')[0],//модалка
 	callBackHead = document.getElementsByClassName('phone_link')[0],//надпись в шапке
 	callBackBottom = document.getElementsByClassName('phone_link')[1],//надпись в подвале
@@ -43,13 +90,12 @@ function timePopup() {
 }
 
 setTimeout(timePopup, 60000);
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 let headerBtn = document.getElementsByClassName('header_btn')[0],
 	popupEngineer = document.getElementsByClassName('popup_engineer')[0],
 	closeModalHead = document.getElementsByClassName('popup_close')[1],
-	closeModalBack = document.getElementsByClassName('popup_dialog')[1],
-	callBackHead = document.getElementsByClassName('phone_link')[0],
-	callBackBottom = document.getElementsByClassName('phone_link')[1];;
+	closeModalBack = document.getElementsByClassName('popup_dialog')[1];
+
 	
 
 
@@ -65,7 +111,94 @@ closeModalBack.addEventListener('click', (event) => popupEngineer.style.display 
 	
 
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+let tabs = document.getElementsByClassName('glazing_slider')[0],//список табов
+        tab = document.querySelectorAll('.tab'),//сами табы
+        tabContent = document.getElementsByClassName('tab_content');//содержание табов
+
+        //скрываем табы
+        function hideTabContent (a) {
+            for (let i = a; i < tabContent.length; i++) {
+                tabContent[i].classList.remove('show');
+                tabContent[i].classList.add('hide');
+                tab[i].classList.remove('active');
+
+            }
+        }
+
+		//оставляем активным первый таб
+        hideTabContent(1);
+
+        //показываем таб
+        function ShowTabContent (b) {
+            if (tabContent[b].classList.contains('hide')) {
+                hideTabContent(0);
+                tabContent[b].classList.remove('hide');
+                tabContent[b].classList.add('show');
+                tab[b].classList.add('active');
+
+            }
+        }
+
+
+        //событие
+        tabs.addEventListener('click', function(event) {
+            let target = event.target;
+            if(target.matches('.tab')) {
+                for (let i = 0; i < tab.length; i++) {
+                    if (target == tab[i]) {
+                        ShowTabContent(i);
+                        break;
+                    }
+                }
+            }
+
+        });
+
+
+// табы для отделки
+
+let tabsRem = document.getElementsByClassName('decoration_slider')[0],//список табов
+    tabOne = document.querySelectorAll('.tabOne'), //сами табы
+    tabContentTwo = document.getElementsByClassName('tabContentTwo'); //содержание табов
+
+     function hideTabContentTwo (a) {
+            for (let i = a; i < tabContentTwo.length; i++) {
+                tabContentTwo[i].classList.remove('show');
+                tabContentTwo[i].classList.add('hide');
+                tabOne[i].classList.remove('active');
+
+            }
+        }
+
+        //оставляем активным первый таб
+        hideTabContentTwo(1);
+
+        //показываем таб
+        function ShowTabContentTwo (b) {
+            if (tabContentTwo[b].classList.contains('hide')) {
+                hideTabContentTwo(0);
+                tabContentTwo[b].classList.remove('hide');
+                tabContentTwo[b].classList.add('show');
+                tabOne[b].classList.add('active');
+
+            }
+        }
+
+        //событие
+        tabsRem.addEventListener('click', function(event) {
+            let target = event.target;
+            if(target.matches('.tabOne')) {
+                for (let i = 0; i < tabOne.length; i++) {
+                    if (target == tabOne[i]) {
+                        ShowTabContentTwo(i);
+                        break;
+                    }
+                }
+            }
+
+        });
+},{}],6:[function(require,module,exports){
 let deadline = '2019/07/04';
 
 function getTimeRemaining(endtime) {
