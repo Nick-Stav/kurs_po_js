@@ -6,6 +6,8 @@ window.addEventListener('DOMContentLoaded', function() {//проверка на 
 	// let formMassage = require('../parts/formMassage.js'); //2) форма обратной связи
 	let modalPopup = require('../parts/modalPopup.js'); //3) модальное окно prop_engineer
 	let timer = require('../parts/timer.js');//4) таймер
+	let tabs = require('../parts/tabs.js');//5) табы 
+	let img = require('../parts/img.js'); //6) картинки
 
 
 
@@ -13,6 +15,8 @@ window.addEventListener('DOMContentLoaded', function() {//проверка на 
 	// formMassage();
 	modalPopup();
 	timer();
+	tabs();
+	img();
 
 
 });
