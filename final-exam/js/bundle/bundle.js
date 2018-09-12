@@ -63,8 +63,9 @@ bgDiv.addEventListener('click', function (event) {
 	}
 	
 });
-
 },{}],3:[function(require,module,exports){
+function modalPopup() {
+
 let popup = document.getElementsByClassName('popup')[0],//модалка
 	callBackHead = document.getElementsByClassName('phone_link')[0],//надпись в шапке
 	callBackBottom = document.getElementsByClassName('phone_link')[1],//надпись в подвале
@@ -90,7 +91,11 @@ function timePopup() {
 }
 
 setTimeout(timePopup, 60000);
+}
+module.exports = modalPopup;
 },{}],4:[function(require,module,exports){
+function propEngineer() {
+
 let headerBtn = document.getElementsByClassName('header_btn')[0],
 	popupEngineer = document.getElementsByClassName('popup_engineer')[0],
 	closeModalHead = document.getElementsByClassName('popup_close')[1],
@@ -109,9 +114,11 @@ closeModalHead.addEventListener('click', (event) => popupEngineer.style.display 
 closeModalBack.addEventListener('click', (event) => popupEngineer.style.display = 'none');
 		
 	
-
-
+}
+module.exports = propEngineer;
 },{}],5:[function(require,module,exports){
+function tabs() {
+
 let tabs = document.getElementsByClassName('glazing_slider')[0],//список табов
         tab = document.querySelectorAll('.tab'),//сами табы
         tabContent = document.getElementsByClassName('tab_content');//содержание табов
@@ -156,17 +163,25 @@ let tabs = document.getElementsByClassName('glazing_slider')[0],//список �
         });
 
 
+
+
 // табы для отделки
 
-let tabsRem = document.getElementsByClassName('decoration_slider')[0],//список табов
-    tabOne = document.querySelectorAll('.tabOne'), //сами табы
-    tabContentTwo = document.getElementsByClassName('tabContentTwo'); //содержание табов
 
+
+let tabsRem = document.querySelectorAll('.decoration_item'),//таб
+    tabAll = document.querySelector('.decoration_slider'), //все табы
+    tabTwoActive = document.querySelectorAll('.no_click'), //активный таб
+    tabContentTwo = document.querySelectorAll('.tabContentTwo'); //содержание табов
+
+
+    console.log(tabAll);
+    //скрываем табы
      function hideTabContentTwo (a) {
             for (let i = a; i < tabContentTwo.length; i++) {
                 tabContentTwo[i].classList.remove('show');
                 tabContentTwo[i].classList.add('hide');
-                tabOne[i].classList.remove('active');
+                tabTwoActive[i].classList.remove('after_click');
 
             }
         }
@@ -180,17 +195,17 @@ let tabsRem = document.getElementsByClassName('decoration_slider')[0],//спис
                 hideTabContentTwo(0);
                 tabContentTwo[b].classList.remove('hide');
                 tabContentTwo[b].classList.add('show');
-                tabOne[b].classList.add('active');
+                tabTwoActive[b].classList.add('after_click');
 
             }
         }
 
         //событие
-        tabsRem.addEventListener('click', function(event) {
+        tabAll.addEventListener('click', function(event) {
             let target = event.target;
-            if(target.matches('.tabOne')) {
-                for (let i = 0; i < tabOne.length; i++) {
-                    if (target == tabOne[i]) {
+            if(target.matches('.decoration_slider')) {
+                for (let i = 0; i < tabsRem.length; i++) {
+                    if (target == tabsRem[i]) {
                         ShowTabContentTwo(i);
                         break;
                     }
@@ -198,7 +213,13 @@ let tabsRem = document.getElementsByClassName('decoration_slider')[0],//спис
             }
 
         });
+
+    }
+    module.exports = tabs;
+ 
 },{}],6:[function(require,module,exports){
+function timer() {
+
 let deadline = '2019/07/04';
 
 function getTimeRemaining(endtime) {
@@ -251,5 +272,6 @@ function setClock(id, endtime){
 //вызываем функцию запуска часов
 setClock('timer', deadline);
 
-
+}
+module.exports = timer;
 },{}]},{},[1]);
