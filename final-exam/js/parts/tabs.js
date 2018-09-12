@@ -1,3 +1,5 @@
+function tabs() {
+
 let tabs = document.getElementsByClassName('glazing_slider')[0],//список табов
         tab = document.querySelectorAll('.tab'),//сами табы
         tabContent = document.getElementsByClassName('tab_content');//содержание табов
@@ -42,17 +44,25 @@ let tabs = document.getElementsByClassName('glazing_slider')[0],//список �
         });
 
 
+
+
 // табы для отделки
 
-let tabsRem = document.getElementsByClassName('decoration_slider')[0],//список табов
-    tabOne = document.querySelectorAll('.tabOne'), //сами табы
-    tabContentTwo = document.getElementsByClassName('tabContentTwo'); //содержание табов
 
+
+let tabsRem = document.querySelectorAll('.decoration_item'),//таб
+    tabAll = document.querySelector('.decoration_slider'), //все табы
+    tabTwoActive = document.querySelectorAll('.no_click'), //активный таб
+    tabContentTwo = document.querySelectorAll('.tabContentTwo'); //содержание табов
+
+
+    console.log(tabAll);
+    //скрываем табы
      function hideTabContentTwo (a) {
             for (let i = a; i < tabContentTwo.length; i++) {
                 tabContentTwo[i].classList.remove('show');
                 tabContentTwo[i].classList.add('hide');
-                tabOne[i].classList.remove('active');
+                tabTwoActive[i].classList.remove('after_click');
 
             }
         }
@@ -66,17 +76,17 @@ let tabsRem = document.getElementsByClassName('decoration_slider')[0],//спис
                 hideTabContentTwo(0);
                 tabContentTwo[b].classList.remove('hide');
                 tabContentTwo[b].classList.add('show');
-                tabOne[b].classList.add('active');
+                tabTwoActive[b].classList.add('after_click');
 
             }
         }
 
         //событие
-        tabsRem.addEventListener('click', function(event) {
+        tabAll.addEventListener('click', function(event) {
             let target = event.target;
-            if(target.matches('.tabOne')) {
-                for (let i = 0; i < tabOne.length; i++) {
-                    if (target == tabOne[i]) {
+            if(target.matches('.decoration_slider')) {
+                for (let i = 0; i < tabsRem.length; i++) {
+                    if (target == tabsRem[i]) {
                         ShowTabContentTwo(i);
                         break;
                     }
@@ -84,3 +94,7 @@ let tabsRem = document.getElementsByClassName('decoration_slider')[0],//спис
             }
 
         });
+
+    }
+module.exports = tabs;
+ 
