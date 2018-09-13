@@ -4,66 +4,542 @@
 window.addEventListener('DOMContentLoaded', function() {//проверка на то, что страница загрузилась т.е. скрипты начнут рабоать после загрузки страницы
 
 	let propEngineer = require('../parts/propEngineer.js'); //1) модальное окно prop_engineer
-	// let formMassage = require('../parts/formMassage.js'); //2) форма обратной связи
+	let formMassage = require('../parts/formMassage.js'); //2) форма обратной связи
 	let modalPopup = require('../parts/modalPopup.js'); //3) модальное окно prop_engineer
 	let timer = require('../parts/timer.js');//4) таймер
 	let tabs = require('../parts/tabs.js');//5) табы 
 	let img = require('../parts/img.js'); //6) картинки
-
+	let calc = require('../parts/calc.js'); //7) калькулятор
 
 
 	propEngineer();
-	// formMassage();
+	formMassage();
 	modalPopup();
 	timer();
 	tabs();
 	img();
+	calc();
 
 
 });
-},{"../parts/img.js":2,"../parts/modalPopup.js":3,"../parts/propEngineer.js":4,"../parts/tabs.js":5,"../parts/timer.js":6}],2:[function(require,module,exports){
-let photo = document.getElementsByClassName('photo')[0],//взяли большой раздел со всеми фотками
-	photoDiv = document.createElement('div'),// создали новый див
-	aImag = document.getElementsByClassName('imgClass'),//картинки в ссылках
-	image = document.getElementsByClassName('image'); //объявляем картинку
-	
-	photoDiv.classList.add("div_bg"); //добавили класс диву
-	photo.appendChild(photoDiv);
+},{"../parts/calc.js":2,"../parts/formMassage.js":3,"../parts/img.js":4,"../parts/modalPopup.js":5,"../parts/propEngineer.js":6,"../parts/tabs.js":7,"../parts/timer.js":8}],2:[function(require,module,exports){
+function calc() {
+    //Calc
+    let popupCalcBtn = document.getElementsByClassName('popup_calc_btn'),
+        popupCalc = document.getElementsByClassName('popup_calc')[0],
+        popupBalconIcons = document.getElementsByClassName('icons_image'),//
+        popupBalconBigIcons = popupCalc.getElementsByClassName('big_image'),//
+        messageText = '',
+        imageValue = '',
+        windowWidth = document.getElementById('width'),
+        windowHeight = document.getElementById('height'),
+        popupCalcNextBtn = document.getElementsByClassName('popup_calc_button')[0],
+        popupCalcProfile = document.getElementsByClassName('popup_calc_profile')[0],
+        popupTypeOfWork = document.getElementById('view_type'),
+        selectValue = "tree",
+        checkbox = document.getElementsByClassName("checkbox"),
+        checkboxCustom = document.getElementsByClassName("checkbox-custom"),
+        checkboxLabel = document.getElementsByClassName("label"),
+        styleOfMaterial = '',
+        popupCalcProfileNextBtn = document.getElementsByClassName('popup_calc_profile_button')[0],
+        popupCalcEnd = document.getElementsByClassName('popup_calc_end')[0],
+        messagePost = new Object(),
+        target = null;
 
-let bgDiv = document.getElementsByClassName("div_bg")[0]; //объявили этот див	
+        messagePost.loading = 'Идет отправка';
+        messagePost.success = 'Спасибо, письмо отправлено';
+        messagePost.failure = 'К сожелению что-то пошло не так';
 
-	for (let i = 0; i < aImag.length; i++) {
-		aImag[i].onclick = function(event) {
-			return false;
-		};
-	}
+        popupCalc.style.top = 'auto';
+        popupCalc.style.left = 'auto';
 
-	//делегирование 
-	photo.addEventListener('click', function (event){
+        popupCalcNextBtn.disabled = true;
 
-		let target = event.target;
-		if (target.matches('.image')) {
-			for (let i = 0; i < image.length; i++) {
-				if (target == image[i]) {
-					event.target.cloneNode(true);
-					event.target.classList.add("overlay");
-					bgDiv.style.display = 'flex';
-					break;
-				}
-			}
-		}
-	});
+for (let i = 0; i < popupBalconIcons.length; i++){
+    popupBalconIcons[i].style.top = 'inherit';
+    popupBalconIcons[i].style.left = 'inherit';
+}
 
-	//закрываем модалку при клике на bg
-bgDiv.addEventListener('click', function (event) { 
-	bgDiv.style.display = 'none';
-	
-	for (let i = 0; i < image.length; i++) {
-		image[i].classList.remove("overlay");
-	}
-	
+function tabHideBalcon(elementNumber) {
+
+for(let i = elementNumber; i < popupBalconBigIcons.length; i++) {
+
+    popupBalconBigIcons[i].classList.add('hide');
+    popupBalconBigIcons[i].classList.remove('show');
+}
+}
+
+function windowCaclulator() {
+
+for (let i = 0; i < popupCalcBtn.length; i++){
+
+    popupCalcBtn[i].addEventListener('click', function() {
+
+        popupCalc.style.display = 'block';
+    });
+}
+
+tabHideBalcon(1);
+
+function tabShowBalcon(number) {
+
+    if (popupBalconBigIcons[number].classList.contains('hide')){
+
+        tabHideBalcon(0);
+
+        popupBalconBigIcons[number].classList.remove('hide');
+        popupBalconBigIcons[number].classList.add('show');
+    }
+}
+
+for (let j = 0; j < popupBalconIcons.length; j++){
+
+    popupBalconIcons[j].addEventListener('click', function() {
+
+        target = event.target;
+
+        if(target.classList.contains('icons_image') ||target.classList.contains('balcon_icons')) {
+
+            for(let i = 0; i < popupBalconIcons.length; i++) {
+
+                if (target == popupBalconIcons[i]) {
+
+                    tabShowBalcon(i);
+
+                    imageValue = popupBalconIcons[i].alt;
+
+                    messageText = 'Клиент желает окно в форме ' + imageValue + ' размеры окна ширина:' + windowWidth.value + 'мм высота:' + windowHeight.value + ' тип материала:' + selectValue + 'клиент так же желает вид окон:' + styleOfMaterial;
+
+                    break;
+
+                }
+            }
+        }
+    });
+}
+
+windowWidth.addEventListener('change', function(){
+
+    if (windowWidth.value == '' || isNaN(windowWidth.value)) {
+        popupCalcNextBtn.disabled = true;
+        popupCalcBtn.textContent = "Введите пожалуйста ширину в милиметрах";
+
+    } else {
+        messageText = 'Клиент желает окно в форме ' + imageValue + ' размеры окна ширина:' + windowWidth.value + 'мм высота:' + windowHeight.value + ' тип материала:' + selectValue + 'клиент так же желает вид окон:' + styleOfMaterial;
+        if (windowHeight.value == '' || isNaN(windowHeight.value)) {
+        popupCalcNextBtn.disabled = true;
+        
+    } else {
+        popupCalcNextBtn.disabled = false;
+        }
+    }
+        return messageText;
 });
+
+windowHeight.addEventListener('change', function(){
+
+    if (windowHeight.value == '' || isNaN(windowHeight.value)) {
+        popupCalcNextBtn.disabled = true;
+        popupCalcBtn.textContent = "Введите пожалуйста ширину в милиметрах";
+
+    } else {
+
+    messageText = 'Клиент желает окно в форме ' + imageValue + ' размеры окна ширина:' + windowWidth.value + 'мм высота:' + windowHeight.value + ' тип материала:' + selectValue + 'клиент так же желает вид окон:' + styleOfMaterial;
+        
+        if (windowWidth.value == '' || isNaN(windowWidth.value)) {
+            popupCalcNextBtn.disabled = true;
+
+        } else {
+            popupCalcNextBtn.disabled = false;
+        }
+    }
+        return messageText;
+});
+
+
+popupCalcNextBtn.addEventListener('click', function() {
+
+    popupCalc.style.display = 'none';
+
+    popupCalcProfile.style.display = 'block';
+
+});
+
+popupCalcProfileNextBtn.addEventListener('click', function() {
+
+    popupCalcProfile.style.display = 'none';
+
+    popupCalcEnd.style.display = 'block';
+
+    sendForm(popupCalcEnd);
+});
+
+popupTypeOfWork.addEventListener('change', function() {
+
+    selectValue = this.options[this.selectedIndex].value;
+
+    messageText = 'Клиент желает окно в форме ' + imageValue + ' размеры окна ширина:' + windowWidth.value + 'мм высота:' + windowHeight.value + ' тип материала:' + selectValue + 'клиент так же желает вид окон:' + styleOfMaterial;
+
+    return messageText;
+});
+
+for (let i = 0; i < checkbox.length; i++) {
+
+    checkbox[i].addEventListener('change', function(){
+
+        if(checkbox[0].checked == true) {
+
+            styleOfMaterial = checkboxCustom[0].id;
+
+            checkbox[1].disabled = true;
+            checkboxCustom[1].disabled = true;
+            checkboxLabel[1].disabled = true;
+
+        } else {
+
+            if(checkbox[1].checked == true) {
+
+            styleOfMaterial = checkboxCustom[1].id;
+
+            checkbox[0].disabled = true;
+            checkboxCustom[0].disabled = true;
+            checkboxLabel[0].disabled = true;
+
+            } else {
+
+                checkbox[0].disabled = false;
+                checkboxCustom[0].disabled = false;
+                checkboxLabel[0].disabled = false;
+                checkbox[1].disabled = false;
+                checkboxCustom[1].disabled = false;
+                checkboxLabel[1].disabled = false;				}
+        }
+
+        messageText = 'Клиент желает окно в форме ' + imageValue + ' размеры окна ширина:' + windowWidth.value + 'мм высота:' + windowHeight.value + 'мм тип материала:' + selectValue + 'клиент так же желает вид окон: ' + styleOfMaterial;
+        
+        return messageText;
+    });
+}
+
+function sendForm(element) {
+    let input = element.getElementsByTagName('input'),
+        inputName = input[0],
+        inputPhone = input[1],
+        popupForm = element.getElementsByClassName('form')[0],
+        statusMessage = document.createElement('div'),
+        elementBtn = element.getElementsByClassName('btn-block')[0];
+
+    function clearInput(){
+        for (let i = 0; i < input.length; i++) {
+        input[i].value = '';
+        }
+    }
+
+    clearInput();
+
+    elementBtn.disabled = true;
+
+    statusMessage.classList.add('status');
+
+    popupForm.appendChild(statusMessage);
+
+    element.style.display = 'block';
+
+    inputPhone.addEventListener('change', function(){
+
+        if(isNaN(inputPhone.value) || inputPhone.value == '') {
+
+            statusMessage.innerHTML = "Введите пожалуйста ваш номер телефона, а не набор букв";
+
+            elementBtn.disabled = true;
+
+            } else {
+
+                statusMessage.innerHTML = "Спасибо, теперь все правильно, проверьте ваши данные и если все правильно то смело нажимайте кнопку заказать звонок";
+
+                elementBtn.disabled = false;
+
+                messagePost.txt = "Вам пришло сообщение от " + inputName.value + " что бы ему позвонить наберите " + inputPhone.value  + messageText;
+
+            }
+    });
+    
+    element.addEventListener('submit', function(elem) {
+
+        elem.preventDefault();
+
+        
+        function postData(data) {
+
+            return new Promise(function(resolve, reject) {
+                let request = new XMLHttpRequest();
+
+                request.open('POST', 'server.php');
+
+                request.setRequestHeader('Content-Type', 'aplication/x-www-form-urlencoded');
+
+                request.onreadystatechange = function() {
+
+                    if (request.readyState < 4) {
+                        resolve();
+                    } else if (request.readyState === 4) {
+                        if (request.status === 200 && request.status < 300) {
+                            resolve();
+                        } else {
+                            reject();
+                        }
+                    }
+                };
+
+                request.send(data);
+
+            });
+        } // postData
+
+        postData(messagePost.txt)
+            .then( () => statusMessage.innerHTML = messagePost.loading)
+            .then( () => {
+                statusMessage.innerHTML = messagePost.success;
+                setTimeout( () => {
+                    statusMessage.innerHTML = '';
+                }, 3000);
+                })
+            .catch( () => statusMessage.innerHTML = messagePost.failure)
+            .then(clearInput);
+    
+    });
+}
+}
+
+windowCaclulator();
+
+
+let popupCalcCloseBotton = document.getElementsByClassName('popup_calc_close')[0];
+
+popupCalcCloseBotton.addEventListener('click', function() {
+
+popupCalc.style.display = 'none';
+
+tabHideBalcon(0);
+
+popupBalconBigIcons[0].classList.remove('hide');
+popupBalconBigIcons[0].classList.add('show');
+
+windowWidth.value = null;
+
+windowHeight.value = null;
+
+});
+let popupCalcProfileCloseBotton = document.getElementsByClassName('popup_calc_profile_close')[0];
+
+popupCalcProfileCloseBotton.addEventListener('click', function() {
+
+popupCalcProfile.style.display = 'none';
+
+tabHideBalcon(0);
+
+popupBalconBigIcons[0].classList.remove('hide');
+popupBalconBigIcons[0].classList.add('show');
+
+windowWidth.value = null;
+
+windowHeight.value = null;
+
+popupTypeOfWork.options[popupTypeOfWork.selectedIndex] = popupTypeOfWork.options[0];
+
+checkbox[0].checked = false;
+
+checkbox[1].checked = false;
+
+checkbox.value = null;
+});
+
+let popupCalcEndCloseBotton = document.getElementsByClassName('popup_calc_end_close')[0];
+
+popupCalcEndCloseBotton.addEventListener('click', function() {
+
+popupCalcEnd.style.display = 'none';
+
+tabHideBalcon(0);
+
+popupBalconBigIcons[0].classList.remove('hide');
+popupBalconBigIcons[0].classList.add('show');
+
+windowWidth.value = null;
+
+windowHeight.value = null;
+
+popupTypeOfWork.options[popupTypeOfWork.selectedIndex] = popupTypeOfWork.options[0];
+
+checkbox[0].checked = false;
+
+checkbox[1].checked = false;
+
+checkbox.value = null;
+});
+}
+
+module.exports = calc;
 },{}],3:[function(require,module,exports){
+function formMassage () {
+	let message = new Object();
+		message.loading = "Загрузка...";
+		message.success = "Спасибо! Скоро мы с Вами свяжемся";
+		message.failure = "Что-то пошло не так...";
+
+		let form = document.getElementsByTagName('form'),
+			statusMessage = document.createElement('div');
+
+		function setCursorPosition(pos, elem) {
+		    elem.focus();
+		    if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);
+		    else if (elem.createTextRange) {
+		        var range = elem.createTextRange();
+		        range.collapse(true);
+		        range.moveEnd("character", pos);
+		        range.moveStart("character", pos);
+		        range.select();
+		    }
+		}
+
+		function mask(event) {
+		    var matrix = "_ (___) ___ ____",
+		        i = 0,
+		        def = matrix.replace(/\D/g, ""),
+		        val = this.value.replace(/\D/g, "");
+		    if (def.length >= val.length) val = def;
+		    this.value = matrix.replace(/./g, function(a) {
+		        return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a;
+		    });
+		    if (event.type == "blur") {
+		        if (this.value.length == 2) this.value = "";
+		    } else setCursorPosition(this.value.length, this);
+		}
+		    
+		for (let i = 0; i < form.length; i++) {
+			let input = form[i].getElementsByTagName('input'),
+				input_tel = document.getElementsByName("user_phone");
+
+			input_tel[i].addEventListener("input", mask);
+		    input_tel[i].addEventListener("focus", mask);
+		    input_tel[i].addEventListener("blur", mask);
+			form[i].addEventListener('submit', (event) => {
+				form[i].appendChild(statusMessage);
+				event.preventDefault();
+
+				//AJAX
+				let request = new XMLHttpRequest();
+				request.open("POST", 'server.php');
+
+				request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+				let formData = new FormData(form[i]);
+		
+				request.send(formData);
+				
+				request.onreadystatechange = function() {
+					if (request.readyState < 4) {
+						statusMessage.innerHTML = message.loading;
+					} else if (request.readyState === 4) {
+						if (request.status == 200 && request.status < 300) {
+							console.log(form[i]);
+							statusMessage.innerHTML = message.success;
+						}
+						else {
+							statusMessage.innerHTML = message.failure;
+						}
+					}
+				};
+				for (let i = 0; i < input.length; i++) {
+					input[i].value = '';
+				}
+				
+			});
+		}
+
+
+}
+
+module.exports = formMassage;
+},{}],4:[function(require,module,exports){
+function img() {
+	let imageWorks = document.querySelector('.works'),//блок портфолио
+		// link_image = imageWorks.getElementsByTagName('a'),
+		image = imageWorks.getElementsByTagName('img'),
+		divImage = document.createElement('div');
+		divImage.classList.add('div-image');
+		document.body.appendChild(divImage);
+		
+
+
+
+
+	for (let i = 0; i < image.length; i++){
+		if (image[i].classList.contains('lupa') == true) {
+			image[i].classList.add('image-gallery');
+			image[i].remove();
+		} else {
+			console.log('None');
+		}
+	}
+	for (let i = 0; i < image.length; i++){
+		image[i].addEventListener('click', function(event){
+			event.preventDefault('link_image');
+			
+			let index = i+1;
+			let imageNew = image[i].src = 'img/our_works/big_img/'+index+'.png';
+			image.src = 'img/our_works/'+index+'.png';
+			let imgQwe = divImage.getElementsByTagName('img');
+			divImage.innerHTML = '<div class="bigImg">' + '<img src="'+imageNew+'">' + '</div>';
+
+
+
+			
+
+			document.onmousewheel=document.onwheel=function(){ 
+				return false;
+			};
+			document.addEventListener("MozMousePixelScroll",function(){return false;},false);
+			document.onkeydown=function(e) {
+				if (e.keyCode>=33&&e.keyCode<=40) return false;
+			};
+
+			
+			divImage.style.cssText="position: fixed; \
+			    overflow: hidden; \
+			    width: 100%; \
+			    height: 100%; \
+			    background-color: rgba(0, 0, 0, .35); \
+			    top: 0; \
+			    text-align: center; \
+			    padding-bottom: 50px; \
+			  ";
+
+			image[i].style.display = 'none';
+
+			divImage.addEventListener('click', function(){
+				image[i].style.display = 'block';
+				divImage.style.display = 'none';
+				image[i].src = 'img/our_works/'+index+'.png';
+
+				document.onmousewheel=document.onwheel=function(){ 
+					return true;
+				};
+				document.addEventListener("MozMousePixelScroll",function(){return true;},true);
+				document.onkeydown=function(e) {
+					if (e.keyCode>=33&&e.keyCode<=40) return true;
+				};
+			});
+
+
+
+			event.preventDefault('link_image');
+
+		});
+	}
+}
+module.exports = img;
+},{}],5:[function(require,module,exports){
 function modalPopup() {
 
 let popup = document.getElementsByClassName('popup')[0],//модалка
@@ -93,7 +569,7 @@ function timePopup() {
 setTimeout(timePopup, 60000);
 }
 module.exports = modalPopup;
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 function propEngineer() {
 
 let headerBtn = document.getElementsByClassName('header_btn')[0],
@@ -116,7 +592,7 @@ closeModalBack.addEventListener('click', (event) => popupEngineer.style.display 
 	
 }
 module.exports = propEngineer;
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 function tabs() {
 
 let tabs = document.getElementsByClassName('glazing_slider')[0],//список табов
@@ -215,9 +691,9 @@ let tabsRem = document.querySelectorAll('.decoration_item'),//таб
         });
 
     }
-    module.exports = tabs;
+module.exports = tabs;
  
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 function timer() {
 
 let deadline = '2019/07/04';
